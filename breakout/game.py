@@ -3,9 +3,12 @@ import tkinter as tk
 from .tipo_colisao import TipoColisao
 from .geometry import Circulo,Retangulo
 
+tempo_after = 10
+velocidade_bola = tempo_after/10
+
 class Bola(Circulo):
     radius = 5
-    def __init__(self, canvas, position_center = (0,0), velocity = (-5, +5)):
+    def __init__(self, canvas, position_center = (0,0), velocity = (-velocidade_bola, +velocidade_bola)):
         Circulo.__init__(self, position_center, Bola.radius)
         self.canvas = canvas
         self.bola = canvas.create_oval(
@@ -128,7 +131,7 @@ class BreakoutGame(tk.Frame):
                         self.remove_tijolo(tijolo)
                         break
         if (self.start):
-            self.after(50, self.game_loop)
+            self.after(tempo_after, self.game_loop)
 
     def remove_tijolo(self, tijolo):
         self.canvas.delete(tijolo.rectangle)
