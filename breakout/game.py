@@ -130,7 +130,7 @@ class BreakoutGame(tk.Frame):
         self.start = True
         if (self.bola != None):
             self.canvas.delete(self.bola.bola)
-        self.bola = Bola(self.canvas, (self.canvas.winfo_reqwidth() / 2, self.canvas.winfo_reqheight() - 2 * 30), (-1, +1))
+        self.bola = Bola(self.canvas, (self.canvas.winfo_reqwidth() / 2, self.canvas.winfo_reqheight() - 2 * 30))
         print('start game')
         self.game_loop()
 
