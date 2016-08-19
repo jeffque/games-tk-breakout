@@ -1,7 +1,16 @@
 import tkinter as tk
+from enum import Enum
+
+class TipoColisao(Enum):
+    NAO_COLIDIU = 0
+    FROM_ESQUERDA = 1
+    FROM_CIMA = 2
+    FROM_DIREITA = 3
+    FROM_BAIXO = 4
 
 class Bola:
     radius = 10
+
     def __init__(self, canvas, position_center = (0,0), velocity = (-10, +10)):
         self.canvas = canvas
         self.bola = canvas.create_oval(
