@@ -54,7 +54,7 @@ class Retangulo(Geometrico):
 
 class Bola(Circulo):
     radius = 5
-    def __init__(self, canvas, position_center = (0,0), velocity = (-10, +10)):
+    def __init__(self, canvas, position_center = (0,0), velocity = (-5, +5)):
         Circulo.__init__(self, position_center, Bola.radius)
         self.canvas = canvas
         self.bola = canvas.create_oval(
@@ -159,7 +159,7 @@ class BreakoutGame(tk.Frame):
             if (colisao_raquete != TipoColisao.NAO_COLIDIU):
                 self.bola.processar_colicao(colisao_raquete)
         if (self.start):
-            self.after(100, self.game_loop)
+            self.after(50, self.game_loop)
 
 
     def create_widgets(self):
