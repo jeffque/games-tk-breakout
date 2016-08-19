@@ -137,7 +137,14 @@ class BreakoutGame(tk.Frame):
 
     def game_loop(self):
         self.bola.move()
-        self.after(100, self.game_loop)
+        # bola foi pra baixo demais...
+        if (self.bola.position_center[1] - self.bola.radius > self.canvas.winfo_reqheight()):
+            self.start = False
+            self.add_score(-1)
+            print('bola vazou, perdeu ponto')
+        if (self.start):
+            self.after(100, self.game_loop)
+
 
     def create_widgets(self):
         self.score_label = tk.Label(self, textvariable=self.score_text_var, height=1, width = 30, bg= '#000000', fg = '#ff0000')
