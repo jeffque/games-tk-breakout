@@ -142,6 +142,10 @@ class BreakoutGame(tk.Frame):
             self.start = False
             self.add_score(-1)
             print('bola vazou, perdeu ponto')
+        colisao_raquete = self.bola.colidiu(self.raquete)
+        print('colisao raqute %s' % colisao_raquete)
+        if (colisao_raquete != TipoColisao.NAO_COLIDIU):
+            self.bola.processar_colicao(colisao_raquete)
         if (self.start):
             self.after(100, self.game_loop)
 
