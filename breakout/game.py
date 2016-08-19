@@ -125,8 +125,11 @@ class BreakoutGame(tk.Frame):
 
     def start_game(self):
         self.start = True
-        self.game_loop()
+        if (self.bola != None):
+            self.canvas.delete(self.bola.bola)
+        self.bola = Bola(self.canvas, (self.canvas.winfo_reqwidth() / 2, self.canvas.winfo_reqheight() - 2 * 30), (-1, +1))
         print('start game')
+        self.game_loop()
 
 
     def game_loop(self):
@@ -157,4 +160,4 @@ class BreakoutGame(tk.Frame):
 
     def posicionar_elementos_inicial(self):
         self.raquete = Raquete(self.canvas, (self.canvas.winfo_reqwidth()/2, self.canvas.winfo_reqheight() - 30))
-        self.bola = Bola(self.canvas, (self.canvas.winfo_reqwidth()/2, self.canvas.winfo_reqheight() - 2*30))
+        self.bola = None
