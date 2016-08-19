@@ -32,10 +32,10 @@ class Circulo(Geometrico):
 
     def colidiu(self, rectangle):
         delta = self - rectangle
-        # é candidato a colidir se delta_x for menor ou igual a raio + meio comprimento
-        if (abs(delta[0]) <= self.radius + rectangle.width/2 and abs(delta[1]) <= self.radius + rectangle.height/2):
-            distancia = pitagoras(delta)
-            if (distancia <= self.radius + rectangle.diagonal):
+        distancia = pitagoras(delta)
+        if (distancia <= self.radius + rectangle.diagonal):
+            # é candidato a colidir se delta_x for menor ou igual a raio + meio comprimento
+            if (abs(delta[0]) <= self.radius + rectangle.width/2 and abs(delta[1]) <= self.radius + rectangle.height/2):
                 # se delta_x > delta_y em termos absolutos, então é colisão horizontal
                 # caso contrário é vertical
                 if (abs(delta[0]) - rectangle.width/2 >= abs(delta[1]) - rectangle.height/2):
