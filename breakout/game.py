@@ -42,6 +42,7 @@ class Tijolo(Retangulo):
             position_center[0] + Tijolo.width/2, position_center[1] + Tijolo.height/2,
             fill = color)
 
+
 class Raquete(Retangulo):
     width = 100
     height = 20
