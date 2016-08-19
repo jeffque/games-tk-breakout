@@ -121,8 +121,21 @@ class BreakoutGame(tk.Frame):
             print('colisao raqute %s' % colisao_raquete)
             if (colisao_raquete != TipoColisao.NAO_COLIDIU):
                 self.bola.processar_colicao(colisao_raquete)
+            # testar colisão com tijolos
+            else:
+                for tijolo in self.tijolos:
+                    colisao_tijolo = self.bola.colidiu(tijolo)
+                    if (colisao_tijolo != TipoColisao.NAO_COLIDIU):
+                        self.bola.processar_colicao(colisao_tijolo)
+                        self.remove_tijolo(tijolo)
+                        break
         if (self.start):
             self.after(50, self.game_loop)
+
+    def remove_tijolo(self, tijolo):
+        self.canvas.delete(tijolo.rectangle)
+        self.tijolos.remove(tijolo)
+        self.add_score(1)
 
 
     def create_widgets(self):
@@ -150,3 +163,11 @@ class BreakoutGame(tk.Frame):
     def posicionar_elementos_inicial(self):
         self.raquete = Raquete(self.canvas, (self.canvas.winfo_reqwidth()/2, self.canvas.winfo_reqheight() - 30))
         self.bola = None
+        self.tijolos = []
+
+        for row in range(0, 6):
+            for column in range(0, 3):
+                pos_x = row * Tijolo.width + 80
+                pos_y = column * Tijolo.height + 80
+                tijolo = Tijolo(self.canvas, 'GREEN', (pos_x, pos_y))
+                self.tijolos.append(tijolo)
