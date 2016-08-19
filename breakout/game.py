@@ -30,6 +30,18 @@ class Bola(Circulo):
         elif (tipo_colisao == TipoColisao.FROM_ESQUERDA):
             self.velocity = (abs(self.velocity[0]), self.velocity[1])
 
+
+class Tijolo(Retangulo):
+    width = 120
+    height = 40
+    def __init__(self, canvas, color, position_center = (0,0)):
+        Retangulo.__init__(self, position_center, Tijolo.width, Tijolo.height)
+        self.canvas = canvas
+        self.rectangle = canvas.create_rectangle(
+            position_center[0] - Tijolo.width/2, position_center[1] - Tijolo.height/2,
+            position_center[0] + Tijolo.width/2, position_center[1] + Tijolo.height/2,
+            fill = color)
+
 class Raquete(Retangulo):
     width = 100
     height = 20
