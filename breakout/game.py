@@ -128,6 +128,7 @@ class BreakoutGame(tk.Frame):
             print('cara, você já começou o jogo!')
             return
         self.start = True
+        self.raquete.move_to(self.canvas.winfo_reqwidth()/2)
         if (self.bola != None):
             self.canvas.delete(self.bola.bola)
         self.bola = Bola(self.canvas, (self.canvas.winfo_reqwidth() / 2, self.canvas.winfo_reqheight() - 2 * 30))
