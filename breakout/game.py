@@ -124,6 +124,9 @@ class BreakoutGame(tk.Frame):
 
 
     def start_game(self):
+        if (self.start):
+            print('cara, você já começou o jogo!')
+            return
         self.start = True
         if (self.bola != None):
             self.canvas.delete(self.bola.bola)
