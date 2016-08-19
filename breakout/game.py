@@ -49,7 +49,7 @@ class Retangulo(Geometrico):
         Geometrico.__init__(self, position_center)
         self.width = width
         self.height = height
-        self.diagonal = pitagoras([position_center[0] + width/2, position_center[1] + height/2])
+        self.diagonal = pitagoras([width/2, height/2])
 
 
 class Bola(Circulo):
