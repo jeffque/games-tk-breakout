@@ -57,12 +57,10 @@ class Raquete(Retangulo):
             position_center[0] - Raquete.width/2, position_center[1] - Raquete.height/2,
             position_center[0] + Raquete.width/2, position_center[1] + Raquete.height/2,
             fill = 'RED')
-        print('posições da raquete (self.position_center): %s' % self.position_center)
 
     def move_to(self, x):
         print('chamando move_to da raquete para %d' % x)
         delta = x - self.position_center[0]
-        print('valores envolvidos: position_cener[0] %d x %d delta %d' % (self.position_center[0], x, delta))
         self.canvas.move(self.rectangle, delta, 0)
         self.position_center[0] = x
 
@@ -118,7 +116,6 @@ class BreakoutGame(tk.Frame):
         # não bateu de nenhuma borda, verificar colisões com outros objetos
         else:
             colisao_raquete = self.bola.colidiu(self.raquete)
-            print('colisao raqute %s' % colisao_raquete)
             if (colisao_raquete != TipoColisao.NAO_COLIDIU):
                 self.bola.processar_colicao(colisao_raquete)
             # testar colisão com tijolos
