@@ -3,8 +3,9 @@ import tkinter as tk
 from .tipo_colisao import TipoColisao
 from .geometry import Circulo,Retangulo
 
+deslocamento_base = 0.1
 tempo_after = 10
-velocidade_bola = tempo_after/10
+velocidade_bola = tempo_after*deslocamento_base
 
 class Bola(Circulo):
     radius = 5
