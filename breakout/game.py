@@ -8,18 +8,59 @@ class TipoColisao(Enum):
     FROM_DIREITA = 3
     FROM_BAIXO = 4
 
-class Bola:
-    radius = 10
 
-    def __init__(self, canvas, position_center = (0,0), velocity = (-10, +10)):
-        self.canvas = canvas
-        self.bola = canvas.create_oval(
-            position_center[0] - Bola.radius / 2, position_center[1] - Bola.radius / 2,
-            position_center[0] + Bola.radius / 2, position_center[1] + Bola.radius / 2,
-            fill='BLUE')
+def pitagoras(coordenada):
+    return (coordenada[0]**2 + coordenada[1]**2)**0.5
+
+
+class Geometrico:
+    def __init__(self, position_center):
         self.position_center = []
         self.position_center.append(position_center[0])
         self.position_center.append(position_center[1])
+
+    def __sub__(self, other):
+        delta = []
+        delta.append(self.position_center[0] - other.position_center[0])
+        delta.append(self.position_center[1] - other.position_center[1])
+        return delta
+
+class Circulo(Geometrico):
+    def __init__(self, position_center, radius):
+        Geometrico.__init__(self, position_center)
+        self.radius = radius
+
+    def colidiu(self, rectangle):
+        delta = self - rectangle
+        # é candidato a colidir se delta_x for menor ou igual a raio + meio comprimento
+        if (abs(delta[0]) <= self.radius + rectangle.width/2 and abs(delta[1]) <= self.radius + rectangle.height/2):
+            distancia = pitagoras(delta)
+            if (distancia <= self.radius + rectangle.diagonal):
+                # se delta_x > delta_y em termos absolutos, então é colisão horizontal
+                # caso contrário é vertical
+                if (abs(delta[0]) - rectangle.width/2 >= abs(delta[1]) - rectangle.height/2):
+                    return TipoColisao.FROM_DIREITA if delta[0] < 0 else TipoColisao.FROM_ESQUERDA
+                else:
+                    return TipoColisao.FROM_BAIXO if delta[0] < 0 else TipoColisao.FROM_CIMA
+        return TipoColisao.NAO_COLIDIU
+
+class Retangulo(Geometrico):
+    def __init__(self, position_center, width, height):
+        Geometrico.__init__(self, position_center)
+        self.width = width
+        self.height = height
+        self.diagonal = pitagoras([position_center[0] + width/2, position_center[1] + height/2])
+
+
+class Bola(Circulo):
+    radius = 5
+    def __init__(self, canvas, position_center = (0,0), velocity = (-10, +10)):
+        Circulo.__init__(self, position_center, Bola.radius)
+        self.canvas = canvas
+        self.bola = canvas.create_oval(
+            position_center[0] - Bola.radius, position_center[1] - Bola.radius,
+            position_center[0] + Bola.radius, position_center[1] + Bola.radius,
+            fill='BLUE')
         self.velocity = velocity
 
 
@@ -28,8 +69,17 @@ class Bola:
         self.position_center[1] = self.position_center[1] + self.velocity[1]
         self.canvas.move(self.bola, self.velocity[0], self.velocity[1])
 
+    def processar_colicao(self, tipo_colisao):
+        if (tipo_colisao == TipoColisao.FROM_BAIXO):
+            self.velocity = (self.velocity[0], -abs(self.velocity[1]))
+        elif (tipo_colisao == TipoColisao.FROM_CIMA):
+            self.velocity = (self.velocity[0], abs(self.velocity[1]))
+        elif (tipo_colisao == TipoColisao.FROM_DIREITA):
+            self.velocity = (-abs(self.velocity[0]), self.velocity[1])
+        elif (tipo_colisao == TipoColisao.FROM_ESQUERDA):
+            self.velocity = (abs(self.velocity[0]), self.velocity[1])
 
-class Raquete:
+class Raquete(Retangulo):
     width = 100
     height = 20
     '''
@@ -38,14 +88,12 @@ class Raquete:
     position_center é o centro da raquete, no mundo x, y
     '''
     def __init__(self, canvas, position_center = (0,0)):
+        Retangulo.__init__(self, position_center, Raquete.width, Raquete.height)
         self.canvas = canvas
         self.rectangle = canvas.create_rectangle(
             position_center[0] - Raquete.width/2, position_center[1] - Raquete.height/2,
             position_center[0] + Raquete.width/2, position_center[1] + Raquete.height/2,
             fill = 'RED')
-        self.position_center = []
-        self.position_center.append(position_center[0])
-        self.position_center.append(position_center[1])
         print('posições da raquete (self.position_center): %s' % self.position_center)
 
     def move_to(self, x):
