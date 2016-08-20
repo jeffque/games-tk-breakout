@@ -36,9 +36,16 @@ class Circulo(Geometrico):
                     return TipoColisao.FROM_BAIXO if delta[0] < 0 else TipoColisao.FROM_CIMA
         return TipoColisao.NAO_COLIDIU
 
+    def __str__(self):
+        return "(x=%s,y=%s,r=%s)" % (self.position_center[0], self.position_center[1], self.radius)
+
 class Retangulo(Geometrico):
     def __init__(self, position_center, width, height):
         Geometrico.__init__(self, position_center)
         self.width = width
         self.height = height
         self.diagonal = pitagoras([width/2, height/2])
+
+    def __str__(self):
+        return "(x0=%s,y0=%s,x1=%s,y1=%s)" % (self.position_center[0] - self.width/2, self.position_center[1] - self.height/2,
+                                              self.position_center[0] + self.width/2, self.position_center[1] + self.height/2)
