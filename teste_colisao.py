@@ -1,5 +1,6 @@
 from breakout.game import Bola, Tijolo, tempo_after
 from breakout.tipo_colisao import TipoColisao
+from tartaruga import draw_colisao
 
 import tkinter as tk
 
@@ -51,6 +52,7 @@ class BreakoutGameDummy(tk.Frame):
                         print('colisão (%s) com o tijolo de id %d' % (colisao_tijolo, tijolo.rectangle))
                         print('bola %s tijolo %s' % (self.bola, tijolo))
                         self.score_text_var.set(colisao_tijolo)
+                        draw_colisao(self.bola, tijolo, self.canvas_turtle)
                         self.bola.processar_colicao(colisao_tijolo)
                         self.remove_tijolo(tijolo)
                         break
@@ -74,6 +76,8 @@ class BreakoutGameDummy(tk.Frame):
         self.canvas = tk.Canvas(self, height=480, width=800)
         self.canvas.grid(column=1, row=1)
         self.posicionar_elementos_inicial()
+        self.canvas_turtle = tk.Canvas(self, height=480, width=800)
+        self.canvas_turtle.grid(column=0, row=1)
 
 
     def posicionar_elementos_inicial(self):
