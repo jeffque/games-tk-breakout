@@ -49,6 +49,8 @@ class BreakoutGameDummy(tk.Frame):
                     colisao_tijolo = self.bola.colidiu(tijolo)
                     if (colisao_tijolo != TipoColisao.NAO_COLIDIU):
                         print('colisão (%s) com o tijolo de id %d' % (colisao_tijolo, tijolo.rectangle))
+                        print('bola %s tijolo %s' % (self.bola, tijolo))
+                        self.score_text_var.set(colisao_tijolo)
                         self.bola.processar_colicao(colisao_tijolo)
                         self.remove_tijolo(tijolo)
                         break
@@ -56,7 +58,6 @@ class BreakoutGameDummy(tk.Frame):
             self.after(tempo_after, self.game_loop)
 
     def remove_tijolo(self, tijolo):
-        print('pseudo remove tijolo %s' % tijolo)
         print('id do tijolo %s' % tijolo.rectangle)
         self.canvas.delete(tijolo.rectangle)
         self.tijolos.remove(tijolo)
