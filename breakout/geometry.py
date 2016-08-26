@@ -68,13 +68,15 @@ class Retangulo(Geometrico):
         self.width = width
         self.height = height
         self.diagonal = pitagoras([width/2, height/2])
+        self.four_points = self.calc_four_points()
+
 
     def __str__(self):
         return "(x0=%s,y0=%s,x1=%s,y1=%s)" % (self.position_center[0] - self.width/2, self.position_center[1] - self.height/2,
                                               self.position_center[0] + self.width/2, self.position_center[1] + self.height/2)
 
 
-    def four_points(self):
+    def calc_four_points(self):
         mid_width = self.width/2
         mid_height = self.height/2
         return ((self.position_center[0] - mid_width, self.position_center[1] - mid_height),
