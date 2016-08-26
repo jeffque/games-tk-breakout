@@ -158,6 +158,7 @@ class BreakoutGame(tk.Frame):
         if (not self.start):
             return
         self.raquete.move_to(x)
+        print(self.raquete.four_points)
 
 
     def bind_eventos(self):
@@ -166,6 +167,8 @@ class BreakoutGame(tk.Frame):
 
     def posicionar_elementos_inicial(self):
         self.raquete = Raquete(self.canvas, (self.canvas.winfo_reqwidth()/2, self.canvas.winfo_reqheight() - 30))
+        print(self.raquete)
+        print(self.raquete.four_points)
         self.bola = None
         self.tijolos = []
 
