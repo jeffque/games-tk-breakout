@@ -7,6 +7,13 @@ def pitagoras(coordenada):
     return pitagoras_quad(coordenada)**0.5
 
 
+def coords_delta(coord_a, coord_b):
+    delta = []
+    delta.append(coord_a[0] - coord_b[0])
+    delta.append(coord_a[1] - coord_b[1])
+    return delta
+
+
 class Geometrico:
     def __init__(self, position_center):
         self.position_center = []
@@ -14,10 +21,8 @@ class Geometrico:
         self.position_center.append(position_center[1])
 
     def __sub__(self, other):
-        delta = []
-        delta.append(self.position_center[0] - other.position_center[0])
-        delta.append(self.position_center[1] - other.position_center[1])
-        return delta
+        return coords_delta(self.position_center, other.position_center)
+
 
 class Circulo(Geometrico):
     def __init__(self, position_center, radius):
