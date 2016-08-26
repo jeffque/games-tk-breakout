@@ -18,6 +18,18 @@ def distances(referencia, outros):
     return [coords_delta(referencia, outro) for outro in outros]
 
 
+def closest(referencia, outros):
+    mais_proximos = []
+    dist_base = pitagoras_quad(coords_delta(referencia, outros[0]))
+    for outro in outros:
+        dist_comp = pitagoras_quad(coords_delta(referencia, outro))
+        if dist_comp < dist_base:
+            mais_proximos = [outro]
+        elif dist_comp == dist_base:
+            mais_proximos.append(outro)
+    return mais_proximos
+
+
 class Geometrico:
     def __init__(self, position_center):
         self.position_center = []
