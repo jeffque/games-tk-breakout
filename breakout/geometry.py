@@ -53,10 +53,45 @@ class Circulo(Geometrico):
             if (abs(delta[0]) <= self.radius + rectangle.width/2 and abs(delta[1]) <= self.radius + rectangle.height/2):
                 # se delta_x > delta_y em termos absolutos, então é colisão horizontal
                 # caso contrário é vertical
-                if (abs(delta[0]) - rectangle.width/2 >= abs(delta[1]) - rectangle.height/2):
-                    return TipoColisao.FROM_DIREITA if delta[0] < 0 else TipoColisao.FROM_ESQUERDA
+                four_points = rectangle.four_points
+                deltas = distances(self.position_center, four_points)
+
+                horizontal_dists = [+1 if delta[0] < 0 else -1 if delta[0] > 0 else 0 for delta in deltas]
+                horizontal_dist_sig = horizontal_dists[0]
+                for horizontal_dist in horizontal_dists:
+                    if horizontal_dist != horizontal_dist_sig:
+                        horizontal_dist_sig = 0
+                        break
+
+                vertical_dists = [+1 if delta[1] < 0 else -1 if delta[1] > 0 else 0 for delta in deltas]
+                vertical_dist_sig = vertical_dists[0]
+                for vertical_dist in vertical_dists:
+                    if vertical_dist != vertical_dist_sig:
+                        vertical_dist_sig = 0
+                        break
+
+                if vertical_dist_sig != 0 and horizontal_dist_sig != 0:
+                    # se não há concordância, o mais próximo é apenas um ponto
+                    mais_proximo = closest(self.position_center, four_points)[0]
+                    print('colisão de ponta')
+                    # colisão horizontal
+                    if abs(mais_proximo[0]) > abs(mais_proximo[1]):
+                        return TipoColisao.FROM_ESQUERDA if mais_proximo[1] > 0 else TipoColisao.FROM_DIREITA
+                    else:
+                        return TipoColisao.FROM_BAIXO if mais_proximo[1] > 0 else TipoColisao.FROM_CIMA
+                elif vertical_dist_sig != 0:
+                    return TipoColisao.FROM_BAIXO if vertical_dist_sig > 0 else TipoColisao.FROM_CIMA
+                elif horizontal_dist_sig != 0:
+                    return TipoColisao.FROM_DIREITA if horizontal_dist_sig > 0 else TipoColisao.FROM_ESQUERDA
                 else:
-                    return TipoColisao.FROM_BAIXO if delta[0] < 0 else TipoColisao.FROM_CIMA
+                    # se for uma colisão interna?
+                    # retorna em direção à saída mais próxima!
+                    mais_proximo = closest(self.position_center, four_points)[0]
+
+                    if abs(mais_proximo[0]) > abs(mais_proximo[1]):
+                        return TipoColisao.FROM_BAIXO if mais_proximo[1] < 0 else TipoColisao.FROM_CIMA
+                    else:
+                        return TipoColisao.FROM_DIREITA if mais_proximo[1] < 0 else TipoColisao.FROM_ESQUERDA
         return TipoColisao.NAO_COLIDIU
 
     def __str__(self):
