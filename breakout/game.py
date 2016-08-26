@@ -24,6 +24,7 @@ class Bola(Circulo):
         self.position_center[1] = self.position_center[1] + self.velocity[1]
         self.canvas.move(self.bola, self.velocity[0], self.velocity[1])
 
+
     def processar_colicao(self, tipo_colisao):
         if (tipo_colisao == TipoColisao.FROM_BAIXO):
             self.velocity = (self.velocity[0], -abs(self.velocity[1]))
@@ -62,6 +63,7 @@ class Raquete(Retangulo):
             position_center[0] - Raquete.width/2, position_center[1] - Raquete.height/2,
             position_center[0] + Raquete.width/2, position_center[1] + Raquete.height/2,
             fill = 'RED')
+
 
     def move_to(self, x):
         print('chamando move_to da raquete para %d' % x)
@@ -135,6 +137,7 @@ class BreakoutGame(tk.Frame):
                         break
         if (self.start):
             self.after(tempo_after, self.game_loop)
+
 
     def remove_tijolo(self, tijolo):
         self.canvas.delete(tijolo.rectangle)
