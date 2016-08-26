@@ -66,8 +66,10 @@ class Raquete(Retangulo):
     def move_to(self, x):
         print('chamando move_to da raquete para %d' % x)
         delta = x - self.position_center[0]
-        self.canvas.move(self.rectangle, delta, 0)
-        self.position_center[0] = x
+        if delta != 0:
+            self.canvas.move(self.rectangle, delta, 0)
+            self.position_center[0] = x
+            self.redef_four_points()
 
 
 class BreakoutGame(tk.Frame):
