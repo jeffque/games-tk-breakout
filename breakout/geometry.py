@@ -1,8 +1,10 @@
 from .tipo_colisao import TipoColisao
 
+def pitagoras_quad(coordenada):
+    return coordenada[0] ** 2 + coordenada[1] ** 2
 
 def pitagoras(coordenada):
-    return (coordenada[0]**2 + coordenada[1]**2)**0.5
+    return pitagoras_quad(coordenada)**0.5
 
 
 class Geometrico:
