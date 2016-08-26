@@ -14,6 +14,10 @@ def coords_delta(coord_a, coord_b):
     return delta
 
 
+def distances(referencia, outros):
+    return [coords_delta(referencia, outro) for outro in outros]
+
+
 class Geometrico:
     def __init__(self, position_center):
         self.position_center = []
