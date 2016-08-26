@@ -11,7 +11,9 @@ class BreakoutGameDummy(tk.Frame):
         self.master.title("Breaker!!")
         self.grid()
         self.score_value = 0
-        self.score_text_var = tk.StringVar()
+        self.colisao_text_var = tk.StringVar()
+        self.bola_text_var = tk.StringVar()
+        self.tijolo_text_var = tk.StringVar()
         self.create_widgets()
 
 
@@ -49,15 +51,20 @@ class BreakoutGameDummy(tk.Frame):
                 for tijolo in self.tijolos:
                     colisao_tijolo = self.bola.colidiu(tijolo)
                     if (colisao_tijolo != TipoColisao.NAO_COLIDIU):
-                        print('colisão (%s) com o tijolo de id %d' % (colisao_tijolo, tijolo.rectangle))
-                        print('bola %s tijolo %s' % (self.bola, tijolo))
-                        self.score_text_var.set(colisao_tijolo)
-                        draw_colisao(self.bola, tijolo, self.canvas_turtle)
-                        self.bola.processar_colicao(colisao_tijolo)
-                        self.remove_tijolo(tijolo)
+                        self.colisao_coisas(colisao_tijolo, self.bola, tijolo, self.canvas_turtle)
                         break
         if (self.start):
             self.after(tempo_after, self.game_loop)
+
+
+    def colisao_coisas(self, colisao_tijolo, bola, tijolo, canvas_turtle):
+        print('colisão (%s) com o tijolo de id %d' % (colisao_tijolo, tijolo.rectangle))
+        print('bola %s tijolo %s' % (bola, tijolo))
+        self.colisao_text_var.set(colisao_tijolo)
+        draw_colisao(bola, tijolo, canvas_turtle)
+        self.bola.processar_colicao(colisao_tijolo)
+        self.remove_tijolo(tijolo)
+
 
     def remove_tijolo(self, tijolo):
         print('id do tijolo %s' % tijolo.rectangle)
@@ -67,17 +74,23 @@ class BreakoutGameDummy(tk.Frame):
 
 
     def create_widgets(self):
-        self.score_label = tk.Label(self, textvariable=self.score_text_var, height=1, width = 30, bg= '#000000', fg = '#ff0000')
+        self.score_label = tk.Label(self, textvariable=self.colisao_text_var, height=1, width = 30, bg='#000000', fg ='#ff0000')
         self.score_label.grid(row=0, column=0, sticky=tk.W + tk.N + tk.S + tk.E,
                               padx=(10,0), pady=(5,0))
+        self.bola_label = tk.Label(self, textvariable=self.bola_text_var, height=1, width = 30)
+        self.bola_label.grid(row=1, column=0, sticky=tk.W + tk.N + tk.S + tk.E,
+                              padx=(10,0), pady=(5,0))
+        self.tijolo_label = tk.Label(self, textvariable=self.tijolo_text_var, height=1, width=30)
+        self.tijolo_label.grid(row=2, column=0, sticky=tk.W + tk.N + tk.S + tk.E,
+                             padx=(10, 0), pady=(5, 0))
         self.btn_start = tk.Button(self, text = 'Start', command = self.start_game)
         self.btn_start.grid(row = 0, column = 1)
 
         self.canvas = tk.Canvas(self, height=480, width=800)
-        self.canvas.grid(column=1, row=1)
+        self.canvas.grid(column=1, row=3)
         self.posicionar_elementos_inicial()
         self.canvas_turtle = tk.Canvas(self, height=480, width=800)
-        self.canvas_turtle.grid(column=0, row=1)
+        self.canvas_turtle.grid(column=0, row=3)
 
 
     def posicionar_elementos_inicial(self):
