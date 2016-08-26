@@ -149,7 +149,7 @@ class BreakoutGame(tk.Frame):
         self.btn_start = tk.Button(self, text = 'Start', command = self.start_game)
         self.btn_start.grid(row = 0, column = 1)
 
-        self.canvas = tk.Canvas(self, height=480, width=800)
+        self.canvas = tk.Canvas(self, height=480, width=800, background = 'WHITE')
         self.canvas.grid(column=1, row=1)
         self.posicionar_elementos_inicial()
 
