@@ -114,4 +114,5 @@ def create_dummy_game():
     gameboard = BreakoutGameDummy()
     return gameboard
 
+
 create_dummy_game().mainloop()
