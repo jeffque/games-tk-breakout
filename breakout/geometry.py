@@ -72,3 +72,12 @@ class Retangulo(Geometrico):
     def __str__(self):
         return "(x0=%s,y0=%s,x1=%s,y1=%s)" % (self.position_center[0] - self.width/2, self.position_center[1] - self.height/2,
                                               self.position_center[0] + self.width/2, self.position_center[1] + self.height/2)
+
+
+    def four_points(self):
+        mid_width = self.width/2
+        mid_height = self.height/2
+        return ((self.position_center[0] - mid_width, self.position_center[1] - mid_height),
+                (self.position_center[0] - mid_width, self.position_center[1] + mid_height),
+                (self.position_center[0] + mid_width, self.position_center[1] + mid_height),
+                (self.position_center[0] + mid_width, self.position_center[1] - mid_height))
