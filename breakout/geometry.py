@@ -1,7 +1,9 @@
 from .tipo_colisao import TipoColisao
 
+
 def pitagoras_quad(coordenada):
     return coordenada[0] ** 2 + coordenada[1] ** 2
+
 
 def pitagoras(coordenada):
     return pitagoras_quad(coordenada)**0.5
@@ -36,6 +38,7 @@ class Geometrico:
         self.position_center.append(position_center[0])
         self.position_center.append(position_center[1])
 
+
     def __sub__(self, other):
         return coords_delta(self.position_center, other.position_center)
 
@@ -44,6 +47,7 @@ class Circulo(Geometrico):
     def __init__(self, position_center, radius):
         Geometrico.__init__(self, position_center)
         self.radius = radius
+
 
     def colidiu(self, rectangle):
         delta = self - rectangle
@@ -94,8 +98,10 @@ class Circulo(Geometrico):
                         return TipoColisao.FROM_DIREITA if mais_proximo[1] < 0 else TipoColisao.FROM_ESQUERDA
         return TipoColisao.NAO_COLIDIU
 
+
     def __str__(self):
         return "(x=%s,y=%s,r=%s)" % (self.position_center[0], self.position_center[1], self.radius)
+
 
 class Retangulo(Geometrico):
     def __init__(self, position_center, width, height):
